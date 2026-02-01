@@ -9,13 +9,13 @@ def get_user_location():
     url = "https://ipinfo.io/json"
     response = requests.get(url).json()
 
-    print("DEBUG:", response)  # Shows your detected location
+    print("DEBUG:", response)
 
     if "loc" not in response:
         raise Exception("Could not get location. Full response: " + str(response))
 
-    lat_str, lon_str = response["loc"].split(",")
-    return float(lat_str), float(lon_str)
+    lat_str, lng_str = response["loc"].split(",")
+    return float(lat_str), float(lng_str)
 
 
 # -----------------------------
