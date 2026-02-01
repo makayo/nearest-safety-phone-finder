@@ -60,19 +60,56 @@ http://127.0.0.1:5000
 requests
 flask
 ```
+
 ## Documentation and Testing
 
-### Testing
+### Testing Overview
+The application was tested using a combination of normal and edge case scenarios to ensure reliability, accuracy, and proper error handling. A separate `test_app.py` script was created to manually validate the core logic, including distance calculations, direction determination, and nearest‑resource selection.
 
-#### Normal Test Cases
-- Standard run using real location data
-- Modified location (temporarily hardcoded) to verify different nearest results
-- Multiple resources returned → nearest one selected correctly
+---
 
-#### Edge Test Cases
-- No resources returned → displays appropriate message
-- API failure or timeout → error handled
-- Invalid or missing location data → handled gracefully
+### Normal Test Cases
+
+#### 1. Standard run using real location data  
+Validated that the application correctly identifies the nearest emergency resource based on the user’s actual IP‑derived coordinates.
+
+#### 2. Modified location (hardcoded)  
+Simulated a different user location to confirm that the nearest resource changes appropriately.
+
+#### 3. Multiple resources returned  
+Ensured that when several emergency resources are available, the application selects the closest one based on distance.
+
+---
+
+### Edge Test Cases
+
+#### 1. No resources returned  
+Tested behavior when the Overpass API returns an empty list.  
+**Expected:** Graceful message indicating no resources found.  
+**Result:** Passed.
+
+#### 2. API failure or invalid response  
+Simulated a failure by passing `None` as the resource list.  
+**Expected:** Function returns `None` without crashing.  
+**Result:** Passed.
+
+#### 3. Invalid or missing location data  
+Passed `None` for latitude/longitude to simulate corrupted or missing location data.  
+**Expected:** Error is raised and handled cleanly.  
+**Result:** Passed.
+
+---
+
+### Test Script
+A dedicated test file (`test_app.py`) was created to run all scenarios.  
+It includes:
+
+- Mock emergency resource data  
+- Normal test cases  
+- Edge test cases  
+- Printed results for verification  
+
+This ensures the core logic works independently of the Flask interface and external APIs.
 
 ## Write‑Up
 
