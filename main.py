@@ -75,6 +75,23 @@ def get_direction(lat1, lon1, lat2, lon2):
     else:
         return "East" if dlon > 0 else "West"
 
+def find_nearest_resource(user_lat, user_lng, resources):
+    if not resources:
+        return None
+
+    nearest = min(
+        resources,
+        key=lambda p: distance_meters(user_lat, user_lng, p["lat"], p["lng"])
+    )
+
+    return {
+        "name": nearest["name"],
+        "lat": nearest["lat"],
+        "lng": nearest["lng"],
+        "distance": distance_meters(user_lat, user_lng, nearest["lat"], nearest["lng"]),
+        "direction": get_direction(user_lat, user_lng, nearest["lat"], nearest["lng"])
+    }
+
 
 # -----------------------------
 # 5. Main logic (CLI version)
